@@ -3,120 +3,534 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Omer Abdur Rehman Portfolio</title>
-
+<title>Omer Abdur Rehman — Portfolio</title>
 <link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-
 <body>
 
-<nav>
-<div class="logo">Omer.</div>
+<!-- CANVAS BACKGROUND -->
+<canvas id="bgCanvas"></canvas>
 
-<div class="menu-toggle" onclick="toggleMenu()">☰</div>
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-trail" id="cursorTrail"></div>
 
-<ul id="navMenu">
-<li><a href="#home">Home</a></li>
-<li><a href="#about">About</a></li>
-<li><a href="#skills">Skills</a></li>
-<li><a href="#experience">Experience</a></li>
-<li><a href="#projects">Projects</a></li>
-<li><a href="#contact">Contact</a></li>
-</ul>
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-content">
+    <div class="loader-code">
+      <span class="lc lc1">$ initializing portfolio...</span>
+      <span class="lc lc2">✓ loading modules</span>
+      <span class="lc lc3">✓ injecting style</span>
+      <span class="lc lc4">✓ mounting components</span>
+      <span class="lc lc5">→ launching...</span>
+    </div>
+    <div class="loader-bar"><div class="loader-fill"></div></div>
+  </div>
+</div>
 
-<button class="theme-btn" onclick="toggleTheme()">🌓</button>
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">
+    <span class="logo-bracket">&lt;</span>Omer<span class="logo-bracket">/&gt;</span>
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home" class="nav-link active" data-section="home">Home</a></li>
+    <li><a href="#about" class="nav-link" data-section="about">About</a></li>
+    <li><a href="#skills" class="nav-link" data-section="skills">Skills</a></li>
+    <li><a href="#projects" class="nav-link" data-section="projects">Projects</a></li>
+    <li><a href="#experience" class="nav-link" data-section="experience">Experience</a></li>
+    <li><a href="#contact" class="nav-link" data-section="contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+      <i class="fas fa-moon"></i>
+    </button>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
 
+<!-- HERO -->
 <section id="home" class="hero">
-
-<div class="hero-content">
-
-<h1>Omer Abdur Rehman</h1>
-
-<h3><span id="typing"></span></h3>
-
-<p>Python Developer | Flutter Developer | AI Enthusiast</p>
-
-<a href="assets/CV-Omer.pdf" class="btn" download>Download CV</a>
-
-</div>
-
-<div class="hero-image">
-<img src="assets/profile.jpg">
-</div>
-
+  <div class="hero-left">
+    <div class="hero-tag">
+      <span class="tag-dot"></span>
+      <span>Available for opportunities</span>
+    </div>
+    <h1 class="hero-name">
+      <span class="name-line">Omer</span>
+      <span class="name-line accent">Abdur Rehman</span>
+    </h1>
+    <div class="hero-roles">
+      <span class="role-prefix">I build </span>
+      <span class="roles-carousel" id="rolesCarousel"></span>
+    </div>
+    <p class="hero-desc">
+      Computer Systems Engineering student at IUB · Crafting intelligent systems at the intersection of <em>AI, mobile, and embedded tech</em>.
+    </p>
+    <div class="hero-cta">
+      <a href="assets/CV-Omer.pdf" class="btn-primary" download>
+        <i class="fas fa-download"></i> Download CV
+      </a>
+      <a href="#projects" class="btn-ghost">
+        View Work <i class="fas fa-arrow-right"></i>
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-num" data-target="4">0</span>+
+        <span class="stat-label">Projects</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <span class="stat-num" data-target="3">0</span>+
+        <span class="stat-label">Years Coding</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <span class="stat-num" data-target="8">0</span>+
+        <span class="stat-label">Technologies</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="profile-ring">
+      <div class="ring r1"></div>
+      <div class="ring r2"></div>
+      <div class="ring r3"></div>
+      <div class="profile-img-wrap">
+        <img src="assets/profile.jpeg" alt="Omer Abdur Rehman" class="profile-img" onerror="this.src='https://ui-avatars.com/api/?name=Omer+Rehman&size=320&background=58a6ff&color=fff&bold=true'">
+      </div>
+      <div class="orbit-badge ob1"><i class="fab fa-python"></i></div>
+      <div class="orbit-badge ob2"><i class="fas fa-mobile-alt"></i></div>
+      <div class="orbit-badge ob3"><i class="fas fa-brain"></i></div>
+      <div class="orbit-badge ob4"><i class="fas fa-microchip"></i></div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-mouse"><div class="scroll-dot"></div></div>
+    <span>scroll</span>
+  </div>
 </section>
 
-<section id="about">
-<h2>About Me</h2>
-<p>
-Motivated Computer System Engineering student with experience in AI, embedded systems, and modern development pipelines.
-</p>
+<!-- ABOUT -->
+<section id="about" class="section">
+  <div class="section-header">
+    <span class="section-eyebrow">Who I Am</span>
+    <h2 class="section-title">About Me</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I'm a <strong>final-year Computer Systems Engineering student</strong> at The Islamia University of Bahawalpur, passionate about building things that sit at the edge of software and intelligence.</p>
+      <p>My Final Year Design Project — <strong>Smart Stock Predictor</strong> — combines Random Forest ML, FinBERT/VADER sentiment analysis, and a Google Gemini chatbot into a Flutter mobile app. I work across the full stack: from Arduino circuits in Tinkercad to FastAPI microservices deployed on Render.</p>
+      <p>When I'm not coding, I'm diving into Neural Networks, IoT systems, and the occasional fuzzy logic theorem.</p>
+      <div class="about-links">
+        <a href="https://github.com/Omerabdurrehman" target="_blank" class="about-link">
+          <i class="fab fa-github"></i> GitHub
+        </a>
+        <a href="https://linkedin.com" target="_blank" class="about-link">
+          <i class="fab fa-linkedin"></i> LinkedIn
+        </a>
+        <a href="mailto:omerrehman000@gmail.com" class="about-link">
+          <i class="fas fa-envelope"></i> Email
+        </a>
+      </div>
+    </div>
+    <div class="about-cards">
+      <div class="info-card ic1">
+        <i class="fas fa-graduation-cap"></i>
+        <div>
+          <strong>BSc Computer Systems Engineering</strong>
+          <span>Islamia University of Bahawalpur · 2022–2026</span>
+        </div>
+      </div>
+      <div class="info-card ic2">
+        <i class="fas fa-map-marker-alt"></i>
+        <div>
+          <strong>Based in Pakistan</strong>
+          <span>Bahawalpur, Punjab</span>
+        </div>
+      </div>
+      <div class="info-card ic3">
+        <i class="fas fa-briefcase"></i>
+        <div>
+          <strong>PITB Flutter Intern</strong>
+          <span>UI/UX & Firebase Integration</span>
+        </div>
+      </div>
+      <div class="info-card ic4">
+        <i class="fas fa-robot"></i>
+        <div>
+          <strong>FYDP: Smart Stock Predictor</strong>
+          <span>ML · Sentiment · Gemini AI · Flutter</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section id="skills">
-<h2>Skills</h2>
+<!-- SKILLS -->
+<section id="skills" class="section">
+  <div class="section-header">
+    <span class="section-eyebrow">What I Know</span>
+    <h2 class="section-title">Skills & Stack</h2>
+  </div>
+  <div class="skills-tabs">
+    <button class="stab active" data-tab="languages">Languages</button>
+    <button class="stab" data-tab="frameworks">Frameworks</button>
+    <button class="stab" data-tab="tools">Tools & Platforms</button>
+    <button class="stab" data-tab="ai">AI & ML</button>
+  </div>
+  <div class="skills-panel active" id="tab-languages">
+    <div class="skill-item" data-pct="90">
+      <div class="skill-info"><span>Python</span><span class="skill-pct">90%</span></div>
+      <div class="skill-bar"><div class="skill-fill"></div></div>
+    </div>
+    <div class="skill-item" data-pct="80">
+      <div class="skill-info"><span>Dart / Flutter</span><span class="skill-pct">80%</span></div>
+      <div class="skill-bar"><div class="skill-fill"></div></div>
+    </div>
+    <div class="skill-item" data-pct="75">
+      <div class="skill-info"><span>C / C++</span><span class="skill-pct">75%</span></div>
+      <div class="skill-bar"><div class="skill-fill"></div></div>
+    </div>
+    <div class="skill-item" data-pct="65">
+      <div class="skill-info"><span>JavaScript</span><span class="skill-pct">65%</span></div>
+      <div class="skill-bar"><div class="skill-fill"></div></div>
+    </div>
+    <div class="skill-item" data-pct="70">
+      <div class="skill-info"><span>MySQL / SQL</span><span class="skill-pct">70%</span></div>
+      <div class="skill-bar"><div class="skill-fill"></div></div>
+    </div>
+  </div>
+  <div class="skills-panel" id="tab-frameworks">
+    <div class="skill-item" data-pct="85">
+      <div class="skill-info"><span>FastAPI</span><span class="skill-pct">85%</span></div>
+      <div class="skill-bar"><div class="skill-fill"></div></div>
+    </div>
+    <div class="skill-item" data-pct="80">
+      <div class="skill-info"><span>Flutter (Dart)</span><span class="skill-pct">80%</span></div>
+      <div class="skill-bar"><div class="skill-fill"></div></div>
+    </div>
+    <div class="skill-item" data-pct="70">
+      <div class="skill-info"><span>scikit-learn</span><span class="skill-pct">70%</span></div>
+      <div class="skill-bar"><div class="skill-fill"></div></div>
+    </div>
+    <div class="skill-item" data-pct="65">
+      <div class="skill-info"><span>TensorFlow / Keras</span><span class="skill-pct">65%</span></div>
+      <div class="skill-bar"><div class="skill-fill"></div></div>
+    </div>
+  </div>
+  <div class="skills-panel" id="tab-tools">
+    <div class="skill-item" data-pct="85">
+      <div class="skill-info"><span>Git & GitHub</span><span class="skill-pct">85%</span></div>
+      <div class="skill-bar"><div class="skill-fill"></div></div>
+    </div>
+    <div class="skill-item" data-pct="80">
+      <div class="skill-info"><span>Firebase</span><span class="skill-pct">80%</span></div>
+      <div class="skill-bar"><div class="skill-fill"></div></div>
+    </div>
+    <div class="skill-item" data-pct="75">
+      <div class="skill-info"><span>Render (Cloud Deploy)</span><span class="skill-pct">75%</span></div>
+      <div class="skill-bar"><div class="skill-fill"></div></div>
+    </div>
+    <div class="skill-item" data-pct="70">
+      <div class="skill-info"><span>Arduino / Tinkercad</span><span class="skill-pct">70%</span></div>
+      <div class="skill-bar"><div class="skill-fill"></div></div>
+    </div>
+    <div class="skill-item" data-pct="65">
+      <div class="skill-info"><span>Android Studio</span><span class="skill-pct">65%</span></div>
+      <div class="skill-bar"><div class="skill-fill"></div></div>
+    </div>
+  </div>
+  <div class="skills-panel" id="tab-ai">
+    <div class="skill-item" data-pct="85">
+      <div class="skill-info"><span>Random Forest / ML</span><span class="skill-pct">85%</span></div>
+      <div class="skill-bar"><div class="skill-fill"></div></div>
+    </div>
+    <div class="skill-item" data-pct="80">
+      <div class="skill-info"><span>FinBERT / NLP</span><span class="skill-pct">80%</span></div>
+      <div class="skill-bar"><div class="skill-fill"></div></div>
+    </div>
+    <div class="skill-item" data-pct="75">
+      <div class="skill-info"><span>VADER Sentiment</span><span class="skill-pct">75%</span></div>
+      <div class="skill-bar"><div class="skill-fill"></div></div>
+    </div>
+    <div class="skill-item" data-pct="70">
+      <div class="skill-info"><span>Google Gemini API</span><span class="skill-pct">70%</span></div>
+      <div class="skill-bar"><div class="skill-fill"></div></div>
+    </div>
+    <div class="skill-item" data-pct="65">
+      <div class="skill-info"><span>Neural Networks / Fuzzy Logic</span><span class="skill-pct">65%</span></div>
+      <div class="skill-bar"><div class="skill-fill"></div></div>
+    </div>
+  </div>
 
-<div class="skills-grid">
-<div class="card">Python</div>
-<div class="card">C++</div>
-<div class="card">Flutter</div>
-<div class="card">MySQL</div>
-<div class="card">Machine Learning</div>
-<div class="card">AI</div>
-<div class="card">Data Analysis</div>
-<div class="card">Git & GitHub</div>
-</div>
+  <!-- Tech Orbs -->
+  <div class="tech-orbs">
+    <div class="orb"><i class="fab fa-python"></i><span>Python</span></div>
+    <div class="orb"><i class="fas fa-mobile-alt"></i><span>Flutter</span></div>
+    <div class="orb"><i class="fas fa-server"></i><span>FastAPI</span></div>
+    <div class="orb"><i class="fab fa-git-alt"></i><span>Git</span></div>
+    <div class="orb"><i class="fas fa-fire"></i><span>Firebase</span></div>
+    <div class="orb"><i class="fas fa-brain"></i><span>ML / AI</span></div>
+    <div class="orb"><i class="fas fa-microchip"></i><span>Arduino</span></div>
+    <div class="orb"><i class="fas fa-database"></i><span>MySQL</span></div>
+  </div>
 </section>
 
-<section id="experience">
-<h2>Experience</h2>
+<!-- PROJECTS -->
+<section id="projects" class="section">
+  <div class="section-header">
+    <span class="section-eyebrow">What I've Built</span>
+    <h2 class="section-title">Projects</h2>
+  </div>
 
-<div class="exp-card">
-<h3>PITB Flutter App Intern</h3>
-<p>Worked on UI/UX and backend integration using Flutter and Firebase workflows.</p>
-</div>
+  <div class="project-filter">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="ai">AI / ML</button>
+    <button class="filter-btn" data-filter="mobile">Mobile</button>
+    <button class="filter-btn" data-filter="embedded">Embedded</button>
+  </div>
+
+  <div class="projects-grid" id="projectsGrid">
+
+    <!-- Stock Predictor -->
+    <div class="project-card" data-cats="ai mobile" onclick="openProjectModal(0)">
+      <div class="project-img-wrap">
+        <img src="assets/stockprediction-1.jpeg" alt="Smart Stock Predictor"
+             onerror="this.src='https://via.placeholder.com/400x220/1a2332/58a6ff?text=Smart+Stock+Predictor'">
+        <div class="project-overlay">
+          <span>View Project <i class="fas fa-expand-alt"></i></span>
+        </div>
+      </div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="ptag">Python</span>
+          <span class="ptag">Flutter</span>
+          <span class="ptag">ML</span>
+          <span class="ptag">NLP</span>
+        </div>
+        <h3>Smart Stock Predictor</h3>
+        <p>ML-powered stock prediction app with Random Forest, FinBERT sentiment, Google Gemini chatbot, and PSX/global market support.</p>
+        <div class="project-footer">
+          <span class="proj-type ai-tag">AI · Mobile</span>
+          <span class="proj-gallery-hint"><i class="fas fa-images"></i> 3 images</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Greenhouse -->
+    <div class="project-card" data-cats="embedded" onclick="openProjectModal(1)">
+      <div class="project-img-wrap">
+        <img src="assets/greenhouse1.png" alt="Automated Greenhouse"
+             onerror="this.src='https://via.placeholder.com/400x220/1a2332/4ade80?text=Automated+Greenhouse'">
+        <div class="project-overlay">
+          <span>View Project <i class="fas fa-expand-alt"></i></span>
+        </div>
+      </div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="ptag">AT89C51</span>
+          <span class="ptag">C</span>
+          <span class="ptag">Sensors</span>
+        </div>
+        <h3>Automated Greenhouse</h3>
+        <p>Microcontroller-based monitoring and control system using AT89C51 with real-time temperature, humidity, and irrigation management.</p>
+        <div class="project-footer">
+          <span class="proj-type emb-tag">Embedded</span>
+          <span class="proj-gallery-hint"><i class="fas fa-images"></i> 2 images</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Traffic Controller -->
+    <div class="project-card" data-cats="embedded" onclick="openProjectModal(2)">
+      <div class="project-img-wrap">
+        <img src="assets/traffic1.png" alt="AdaptaFlow Traffic Controller"
+             onerror="this.src='https://via.placeholder.com/400x220/1a2332/f59e0b?text=AdaptaFlow+Traffic+Controller'">
+        <div class="project-overlay">
+          <span>View Project <i class="fas fa-expand-alt"></i></span>
+        </div>
+      </div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="ptag">Arduino</span>
+          <span class="ptag">I2C</span>
+          <span class="ptag">Tinkercad</span>
+        </div>
+        <h3>AdaptaFlow BTI — Smart Traffic Controller</h3>
+        <p>4-way adaptive traffic controller using dual-Arduino I2C master/slave with LDR night mode, emergency override, and LCD display.</p>
+        <div class="project-footer">
+          <span class="proj-type emb-tag">Embedded</span>
+          <span class="proj-gallery-hint"><i class="fas fa-images"></i> 3 images</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Water Tank -->
+    <div class="project-card" data-cats="embedded ai" onclick="openProjectModal(3)">
+      <div class="project-img-wrap">
+        <img src="assets/water1.jpg" alt="Smart Water Tank"
+             onerror="this.src='https://via.placeholder.com/400x220/1a2332/38bdf8?text=Smart+Water+Tank'">
+        <div class="project-overlay">
+          <span>View Project <i class="fas fa-expand-alt"></i></span>
+        </div>
+      </div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="ptag">Arduino</span>
+          <span class="ptag">HC-SR04</span>
+          <span class="ptag">IoT</span>
+        </div>
+        <h3>Smart Water Tank Controller</h3>
+        <p>Ultrasonic-sensor-based water level monitoring with automated pump control, LED indicators, and real-time cause-effect simulation.</p>
+        <div class="project-footer">
+          <span class="proj-type emb-tag">IoT · Embedded</span>
+          <span class="proj-gallery-hint"><i class="fas fa-images"></i> 3 images</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </section>
 
-<section id="projects">
-<h2>Projects</h2>
-
-<div class="project-container">
-
-<div class="project-card" onclick="openPopup('assets/greenhouse.png')">
-<img src="assets/greenhouse.png">
-<h3>Automated Greenhouse</h3>
-<p>AT89C51-based monitoring system</p>
-</div>
-
-<div class="project-card" onclick="openPopup('assets/stockprediction.png')">
-<img src="assets/stockprediction.png">
-<h3>Stock Prediction System</h3>
-<p>ML + sentiment analysis model</p>
-</div>
-
-</div>
+<!-- EXPERIENCE -->
+<section id="experience" class="section">
+  <div class="section-header">
+    <span class="section-eyebrow">My Journey</span>
+    <h2 class="section-title">Experience & Education</h2>
+  </div>
+  <div class="timeline">
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <span class="tl-date">2024</span>
+        <h3>PITB Flutter App Intern</h3>
+        <p class="tl-company">Punjab Information Technology Board</p>
+        <p>Built Flutter mobile UI/UX components and integrated Firebase real-time workflows. Gained hands-on experience with production-grade mobile development pipelines.</p>
+        <div class="tl-tags">
+          <span>Flutter</span><span>Firebase</span><span>Dart</span>
+        </div>
+      </div>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <span class="tl-date">2024–2025</span>
+        <h3>Final Year Design Project</h3>
+        <p class="tl-company">IUB · Supervised by Dr. Muhammad Bux Alvi</p>
+        <p>Developed Smart Stock Predictor — a full-stack ML-powered investment app combining stock prediction, NLP sentiment analysis, Gemini AI chatbot, and PSX/global market data.</p>
+        <div class="tl-tags">
+          <span>Python</span><span>FastAPI</span><span>Flutter</span><span>FinBERT</span><span>Gemini</span>
+        </div>
+      </div>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <span class="tl-date">2022–2026</span>
+        <h3>BSc Computer Systems Engineering</h3>
+        <p class="tl-company">The Islamia University of Bahawalpur</p>
+        <p>Courses: Neural Networks & Fuzzy Logic, IoT Applications, Mobile App & Game Development, Embedded Systems, Data Structures & Algorithms.</p>
+        <div class="tl-tags">
+          <span>C/C++</span><span>Python</span><span>Arduino</span><span>IoT</span><span>AI/ML</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section id="contact">
-<h2>Contact</h2>
-
-<p>Email: omerrehman000@gmail.com</p>
-
-<div class="socials">
-<a href="https://github.com/Omerabdurrehman"><i class="fab fa-github"></i></a>
-<a href="https://linkedin.com"><i class="fab fa-linkedin"></i></a>
-<a href="#"><i class="fab fa-stack-overflow"></i></a>
-</div>
+<!-- CONTACT -->
+<section id="contact" class="section">
+  <div class="section-header">
+    <span class="section-eyebrow">Get In Touch</span>
+    <h2 class="section-title">Contact Me</h2>
+  </div>
+  <div class="contact-wrap">
+    <div class="contact-info">
+      <h3>Let's build something together</h3>
+      <p>Whether it's a project collab, internship opportunity, or just a chat about AI and embedded systems — my inbox is open.</p>
+      <div class="contact-items">
+        <a href="mailto:omerrehman000@gmail.com" class="contact-item">
+          <div class="ci-icon"><i class="fas fa-envelope"></i></div>
+          <div><strong>Email</strong><span>omerrehman000@gmail.com</span></div>
+        </a>
+        <a href="https://github.com/Omerabdurrehman" target="_blank" class="contact-item">
+          <div class="ci-icon"><i class="fab fa-github"></i></div>
+          <div><strong>GitHub</strong><span>Omerabdurrehman</span></div>
+        </a>
+        <a href="https://linkedin.com" target="_blank" class="contact-item">
+          <div class="ci-icon"><i class="fab fa-linkedin"></i></div>
+          <div><strong>LinkedIn</strong><span>Connect with me</span></div>
+        </a>
+      </div>
+    </div>
+    <form class="contact-form" id="contactForm" onsubmit="handleFormSubmit(event)">
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" placeholder="Your name" required>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="your@email.com" required>
+      </div>
+      <div class="form-group">
+        <label>Subject</label>
+        <input type="text" placeholder="What's this about?">
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea rows="5" placeholder="Tell me about your project or opportunity..." required></textarea>
+      </div>
+      <button type="submit" class="btn-primary full-width">
+        <span class="btn-text">Send Message <i class="fas fa-paper-plane"></i></span>
+        <span class="btn-loading" style="display:none"><i class="fas fa-spinner fa-spin"></i> Sending...</span>
+      </button>
+      <div class="form-success" id="formSuccess" style="display:none">
+        <i class="fas fa-check-circle"></i> Message sent! I'll get back to you soon.
+      </div>
+    </form>
+  </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
-<p>© 2026 Omer | Engineering Precision Portfolio</p>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <span class="logo-bracket">&lt;</span>Omer<span class="logo-bracket">/&gt;</span>
+    </div>
+    <p>© 2026 Omer Abdur Rehman · Engineering Precision Portfolio</p>
+    <div class="footer-links">
+      <a href="https://github.com/Omerabdurrehman"><i class="fab fa-github"></i></a>
+      <a href="https://linkedin.com"><i class="fab fa-linkedin"></i></a>
+      <a href="mailto:omerrehman000@gmail.com"><i class="fas fa-envelope"></i></a>
+    </div>
+  </div>
 </footer>
 
-<div id="popup" onclick="closePopup()">
-<img id="popup-img">
+<!-- PROJECT MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModal(null)"><i class="fas fa-times"></i></button>
+    <div class="modal-gallery" id="modalGallery">
+      <button class="gallery-prev" onclick="galleryNav(-1)"><i class="fas fa-chevron-left"></i></button>
+      <div class="gallery-track" id="galleryTrack"></div>
+      <button class="gallery-next" onclick="galleryNav(1)"><i class="fas fa-chevron-right"></i></button>
+      <div class="gallery-dots" id="galleryDots"></div>
+    </div>
+    <div class="modal-info">
+      <div class="modal-tags" id="modalTags"></div>
+      <h2 id="modalTitle"></h2>
+      <p id="modalDesc"></p>
+      <div class="modal-features" id="modalFeatures"></div>
+    </div>
+  </div>
 </div>
 
 <script src="script.js"></script>
