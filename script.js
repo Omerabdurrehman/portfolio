@@ -446,7 +446,7 @@ function handleFormSubmit(e) {
   }, 1800);
 }
 
-// ── SCROLL REVEAL ────────────────────────────────────────────
+// ── SCROLL REVEALsa ────────────────────────────────────────────
 const revealObserver = new IntersectionObserver(entries => {
   entries.forEach(en => {
     if (en.isIntersecting) {
