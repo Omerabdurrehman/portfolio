@@ -357,6 +357,12 @@ nav#nav.solid{background:var(--bg2)}
 .proj-imgs{
   position:relative;overflow:hidden;
   aspect-ratio:16/9;background:var(--bg3);
+  cursor:pointer;
+}
+.proj-imgs::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to bottom,transparent 60%,rgba(0,0,0,.18) 100%);
+  pointer-events:none;z-index:2;
 }
 .img-slides{
   display:flex;height:100%;
@@ -365,6 +371,7 @@ nav#nav.solid{background:var(--bg2)}
 .img-slides img{
   min-width:100%;height:100%;object-fit:cover;
   flex-shrink:0;
+  display:block;background:var(--bg3);
 }
 
 .slide-btn{
@@ -508,7 +515,7 @@ footer{
   display:flex;align-items:center;justify-content:space-between;
   flex-wrap:wrap;gap:14px;
 }
-footer p{font-size:13px;color:var(--txt3)}
+footer p{font-size:13px;color:var(--txt3);display:none}
 .foot-links{display:flex;gap:14px}
 .foot-links a{font-size:20px;color:var(--txt3);transition:var(--t)}
 .foot-links a:hover{color:var(--acc)}
@@ -542,7 +549,7 @@ footer p{font-size:13px;color:var(--txt3)}
 .modal-gallery{position:relative;overflow:hidden;border-radius:18px 18px 0 0;aspect-ratio:16/9;background:var(--bg3)}
 .mg-track{display:flex;height:100%;transition:transform .4s cubic-bezier(.4,0,.2,1)}
 .mg-slide{min-width:100%;height:100%}
-.mg-slide img{width:100%;height:100%;object-fit:contain;background:var(--bg)}
+.mg-slide img{width:100%;height:100%;object-fit:contain;background:var(--bg2)}
 .mg-btn{
   position:absolute;top:50%;transform:translateY(-50%);
   width:42px;height:42px;border-radius:50%;
