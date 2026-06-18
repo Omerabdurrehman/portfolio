@@ -6,7 +6,7 @@
 const PROJECTS = [
   {
     title: "Smart Stock Predictor",
-    desc:  "Full-stack AI investment app for PSX and global markets. Random Forest price prediction, dual FinBERT/VADER sentiment pipeline, Google Gemini chatbot, portfolio tracker, watchlist, bond calculator, options pricing, and more — Flutter frontend, FastAPI backend, deployed on Render with Firebase auth.",
+    desc:  "Full-stack AI investment app for PSX and global markets. Random Forest price prediction, dual FinBERT/VADER sentiment pipeline, Gemini chatbot, portfolio tracker, bond calculator, options pricing — Flutter frontend, FastAPI backend, deployed on Render with Firebase auth.",
     tags:  ["Python","Flutter","FastAPI","FinBERT","VADER","Gemini","Firebase","Render"],
     imgs:  ["assets/stockprediction-1.jpeg","assets/stockprediction-2.jpeg","assets/stockprediction-3.jpeg"],
     feats: ["Random Forest Price Prediction","FinBERT + VADER Sentiment","Gemini AI Chatbot","PSX + Global Markets","Portfolio Tracker","Options & Bond Pricing","Firebase Authentication","Render Cloud Deployment"]
