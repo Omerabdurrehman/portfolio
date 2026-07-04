@@ -29,7 +29,7 @@ const PROJECTS = [
     title: "Smart Water Tank Controller",
     desc:  "Arduino-based water level monitoring using HC-SR04 ultrasonic sensor. Calculates fill percentage, shows it on LCD, lights up colour-coded LEDs (empty/mid/full), and switches the pump relay automatically. Also includes an interactive browser-based cause-effect simulator showing what happens at each level in real time.",
     tags:  ["Arduino","HC-SR04","IoT","C++","LCD","Relay"],
-    imgs:  ["assets/water1.jpg","assets/water2.png","assets/water3.png"],
+    imgs:  ["assets/water1.png","assets/water2.png","assets/water3.png"],
     feats: ["HC-SR04 Ultrasonic Sensing","Fill % LCD Display","Tri-color LED Indicators","Automated Pump Relay","Interactive Web Simulator","IoT System Design"]
   }
 ];
@@ -352,6 +352,176 @@ function setupReveal() {
   });
 }
 
+/* ══════════════════════════════════════════════
+   NEW — interactive layer
+══════════════════════════════════════════════ */
+
+/* ── Magnetic Cursor ── */
+function initCursor() {
+  const isFine = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+  if (!isFine) return;
+
+  document.body.classList.add('has-cursor');
+  const dot  = document.getElementById('cursorDot');
+  const ring = document.getElementById('cursorRing');
+  if (!dot || !ring) return;
+
+  let dx = 0, dy = 0, rx = 0, ry = 0;
+  window.addEventListener('mousemove', e => {
+    document.body.classList.add('cursor-live');
+    dx = e.clientX; dy = e.clientY;
+    dot.style.left = dx + 'px'; dot.style.top = dy + 'px';
+  }, {passive:true});
+
+  (function loop(){
+    rx += (dx - rx) * 0.18;
+    ry += (dy - ry) * 0.18;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(loop);
+  })();
+
+  const hoverables = 'a, button, .proj-card, .fact-card, .sg-item, .faq-q, .marquee-item, input, textarea';
+  document.addEventListener('mouseover', e => {
+    if (e.target.closest(hoverables)) ring.classList.add('big');
+  });
+  document.addEventListener('mouseout', e => {
+    if (e.target.closest(hoverables)) ring.classList.remove('big');
+  });
+  document.addEventListener('mousedown', () => ring.classList.add('click'));
+  document.addEventListener('mouseup',   () => ring.classList.remove('click'));
+}
+
+/* ── Glow Border Cards (cursor-tracking radial glow) ── */
+function initGlowCards() {
+  const selector = '.fact-card, .proj-card, .contact-row, .sg-item, .tl-card, .contact-form';
+  document.querySelectorAll(selector).forEach(el => {
+    el.classList.add('glow-card');
+    el.addEventListener('mousemove', e => {
+      const r = el.getBoundingClientRect();
+      el.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      el.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    });
+  });
+}
+
+/* ── Radial Glow Buttons (track cursor position) ── */
+function initGlowButtons() {
+  document.querySelectorAll('.btn-solid, .cv-btn').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const r = btn.getBoundingClientRect();
+      btn.style.setProperty('--gx', (e.clientX - r.left) + 'px');
+      btn.style.setProperty('--gy', (e.clientY - r.top) + 'px');
+    });
+  });
+}
+
+/* ── Magnetic pull for icons / social buttons ── */
+function initMagnetic() {
+  document.querySelectorAll('.sfb, .btn-icon, .icon-btn').forEach(el => {
+    el.classList.add('magnetic');
+    el.addEventListener('mousemove', e => {
+      const r = el.getBoundingClientRect();
+      const mx = e.clientX - (r.left + r.width / 2);
+      const my = e.clientY - (r.top + r.height / 2);
+      el.style.transform = `translate(${mx * 0.35}px, ${my * 0.35}px)`;
+    });
+    el.addEventListener('mouseleave', () => { el.style.transform = ''; });
+  });
+}
+
+/* ── Spotlight Navbar ── */
+function initSpotlightNav() {
+  const wrap = document.querySelector('.nav-center');
+  if (!wrap) return;
+  wrap.addEventListener('mousemove', e => {
+    const r = wrap.getBoundingClientRect();
+    wrap.style.setProperty('--nx', (e.clientX - r.left) + 'px');
+    wrap.style.setProperty('--ny', (e.clientY - r.top) + 'px');
+    wrap.classList.add('spot-on');
+  });
+  wrap.addEventListener('mouseleave', () => wrap.classList.remove('spot-on'));
+}
+
+/* ── Tech Marquee (Logo Slider) ── */
+const MARQUEE_ITEMS = [
+  {icon:'fab fa-python',           label:'Python'},
+  {icon:'fas fa-mobile-alt',       label:'Flutter'},
+  {icon:'fas fa-server',           label:'FastAPI'},
+  {icon:'fas fa-brain',            label:'scikit-learn'},
+  {icon:'fas fa-fire-flame-curved',label:'Firebase'},
+  {icon:'fab fa-git-alt',          label:'Git'},
+  {icon:'fas fa-microchip',        label:'Arduino'},
+  {icon:'fas fa-database',         label:'MySQL'},
+  {icon:'fab fa-js',               label:'JavaScript'},
+  {icon:'fas fa-cloud',            label:'Render'},
+  {icon:'fas fa-robot',            label:'Gemini API'},
+  {icon:'fas fa-chart-line',       label:'FinBERT'}
+];
+function initMarquee() {
+  const track = document.getElementById('marqueeTrack');
+  if (!track) return;
+  const html = MARQUEE_ITEMS.map(m =>
+    `<div class="marquee-item"><i class="${m.icon}"></i><span>${m.label}</span></div>`
+  ).join('');
+  track.innerHTML = html + html; // duplicate for seamless loop
+}
+
+/* ── FAQ Accordion ── */
+function initFAQ() {
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const q = item.querySelector('.faq-q');
+    const a = item.querySelector('.faq-a');
+    q.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(other => {
+        if (other !== item) {
+          other.classList.remove('open');
+          other.querySelector('.faq-a').style.maxHeight = null;
+        }
+      });
+      item.classList.toggle('open', !isOpen);
+      a.style.maxHeight = !isOpen ? a.scrollHeight + 'px' : null;
+    });
+  });
+}
+
+/* ── Kinetic section-title reveal (wrap words, animate on scroll) ── */
+function initTitleReveal() {
+  document.querySelectorAll('.sec-title').forEach(title => {
+    const words = title.textContent.trim().split(/\s+/);
+    title.innerHTML = words.map((w, i) =>
+      `<span class="stw" style="transition-delay:${i * 0.05}s">${w}&nbsp;</span>`
+    ).join('');
+  });
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, {threshold:0.4});
+  document.querySelectorAll('.sec-title').forEach(t => io.observe(t));
+}
+
+/* ── 3D tilt for project cards (Cursor Card effect) ── */
+function initCardTilt() {
+  const isFine = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+  if (!isFine) return;
+  document.querySelectorAll('.proj-card').forEach(card => {
+    card.style.transformStyle = 'preserve-3d';
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      card.style.transform =
+        `perspective(900px) rotateX(${(-py * 6).toFixed(2)}deg) rotateY(${(px * 8).toFixed(2)}deg) translateY(-4px)`;
+    });
+    card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+  });
+}
+
 /* ── init ───────────────────────────── */
 window.addEventListener('DOMContentLoaded', () => {
   initCardSliders();
@@ -359,6 +529,15 @@ window.addEventListener('DOMContentLoaded', () => {
   runMorphText();
   runBadgeFlip();
   runCounters();
+  initCursor();
+  initGlowCards();
+  initGlowButtons();
+  initMagnetic();
+  initSpotlightNav();
+  initMarquee();
+  initFAQ();
+  initTitleReveal();
+  initCardTilt();
   onScroll(); // run once to set initial states
 });
 
