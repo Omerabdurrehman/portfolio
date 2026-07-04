@@ -10,6 +10,10 @@
 </head>
 <body class="dark">
 
+<!-- ═══ MAGNETIC CURSOR ═══ -->
+<div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
 <!-- ═══ KINETIC TEXT LOADER ═══ -->
 <div id="pageLoader" class="kinetic-loader">
   <div class="kinetic-text" id="kineticText" aria-label="Loading">
@@ -26,6 +30,7 @@
     <a href="#skills"   class="nl" data-s="skills">Skills</a>
     <a href="#projects" class="nl" data-s="projects">Projects</a>
     <a href="#timeline" class="nl" data-s="timeline">Journey</a>
+    <a href="#faq"      class="nl" data-s="faq">FAQ</a>
     <a href="#contact"  class="nl" data-s="contact">Contact</a>
   </div>
   <div class="nav-end">
@@ -48,6 +53,7 @@
   <a href="#skills"   onclick="closeDrawer()">Skills</a>
   <a href="#projects" onclick="closeDrawer()">Projects</a>
   <a href="#timeline" onclick="closeDrawer()">Journey</a>
+  <a href="#faq"      onclick="closeDrawer()">FAQ</a>
   <a href="#contact"  onclick="closeDrawer()">Contact</a>
   <a href="assets/CV-Omer.pdf" download class="drawer-cv">Download CV</a>
 </div>
@@ -55,6 +61,11 @@
 
 <!-- ═══ HERO ═══ -->
 <section id="home" class="hero">
+  <div class="aurora-wrap" aria-hidden="true">
+    <div class="aurora-blob ab1"></div>
+    <div class="aurora-blob ab2"></div>
+    <div class="aurora-blob ab3"></div>
+  </div>
   <div class="perspective-grid" id="heroGrid" aria-hidden="true">
     <div class="pg-plane"></div>
     <div class="pg-fade"></div>
@@ -203,6 +214,11 @@
     <div class="sg-item"><i class="fas fa-database"></i><span>MySQL</span></div>
     <div class="sg-item"><i class="fab fa-js"></i><span>JavaScript</span></div>
     <div class="sg-item"><i class="fas fa-cloud"></i><span>Render</span></div>
+  </div>
+
+  <!-- tech marquee -->
+  <div class="marquee-wrap" aria-hidden="true">
+    <div class="marquee-track" id="marqueeTrack"></div>
   </div>
 </section>
 
@@ -377,6 +393,35 @@
       </div>
     </div>
 
+  </div>
+</section>
+
+<!-- ═══ FAQ ═══ -->
+<section id="faq" class="sec">
+  <div class="rays-bg" aria-hidden="true"></div>
+  <div class="sec-label">Good to know</div>
+  <h2 class="sec-title">Frequently Asked</h2>
+  <div class="faq-wrap">
+    <div class="faq-item">
+      <div class="faq-q"><span>What kind of roles or projects are you looking for?</span><i class="fas fa-plus"></i></div>
+      <div class="faq-a"><p>I'm looking for graduate/entry-level roles or collaborations in AI/ML, mobile development, or embedded systems — anywhere I can build practical, end-to-end products rather than just isolated scripts.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q"><span>Are you currently applying for MS programs?</span><i class="fas fa-plus"></i></div>
+      <div class="faq-a"><p>Yes — I'm actively pursuing MS scholarships in AI/ML programs abroad while continuing to ship side projects and refine my portfolio.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q"><span>What does your typical stack look like?</span><i class="fas fa-plus"></i></div>
+      <div class="faq-a"><p>Flutter for mobile frontends, Python/FastAPI for backends, and whatever ML tooling the problem calls for — scikit-learn, FinBERT/transformers, or a hosted LLM. For embedded work it's Arduino/C++ and, occasionally, Tinkercad simulation.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q"><span>Do you take on freelance or contract work?</span><i class="fas fa-plus"></i></div>
+      <div class="faq-a"><p>Selectively — reach out with details about scope and timeline through the contact form or email below and I'll let you know if it's a fit.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q"><span>Are you open to remote work?</span><i class="fas fa-plus"></i></div>
+      <div class="faq-a"><p>Yes. I'm based in Bahawalpur, Pakistan, and open to remote roles as well as relocation for the right opportunity.</p></div>
+    </div>
   </div>
 </section>
 
