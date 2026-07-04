@@ -345,7 +345,7 @@ function submitForm(e) {
 /* ── add reveal class to elements ───── */
 function setupReveal() {
   document.querySelectorAll(
-    '.fact-card, .proj-card, .sg-item, .tl-card, .contact-row, .skill-row'
+    '.fact-card, .proj-card, .tl-card, .contact-row, .skill-row'
   ).forEach((el, i) => {
     el.classList.add('reveal');
     el.style.transitionDelay = (i % 6) * 0.06 + 's';
@@ -356,44 +356,9 @@ function setupReveal() {
    NEW — interactive layer
 ══════════════════════════════════════════════ */
 
-/* ── Magnetic Cursor ── */
-function initCursor() {
-  const isFine = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
-  if (!isFine) return;
-
-  document.body.classList.add('has-cursor');
-  const dot  = document.getElementById('cursorDot');
-  const ring = document.getElementById('cursorRing');
-  if (!dot || !ring) return;
-
-  let dx = 0, dy = 0, rx = 0, ry = 0;
-  window.addEventListener('mousemove', e => {
-    document.body.classList.add('cursor-live');
-    dx = e.clientX; dy = e.clientY;
-    dot.style.left = dx + 'px'; dot.style.top = dy + 'px';
-  }, {passive:true});
-
-  (function loop(){
-    rx += (dx - rx) * 0.18;
-    ry += (dy - ry) * 0.18;
-    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
-    requestAnimationFrame(loop);
-  })();
-
-  const hoverables = 'a, button, .proj-card, .fact-card, .sg-item, .faq-q, .marquee-item, input, textarea';
-  document.addEventListener('mouseover', e => {
-    if (e.target.closest(hoverables)) ring.classList.add('big');
-  });
-  document.addEventListener('mouseout', e => {
-    if (e.target.closest(hoverables)) ring.classList.remove('big');
-  });
-  document.addEventListener('mousedown', () => ring.classList.add('click'));
-  document.addEventListener('mouseup',   () => ring.classList.remove('click'));
-}
-
 /* ── Glow Border Cards (cursor-tracking radial glow) ── */
 function initGlowCards() {
-  const selector = '.fact-card, .proj-card, .contact-row, .sg-item, .tl-card, .contact-form';
+  const selector = '.fact-card, .proj-card, .contact-row, .tl-card, .contact-form';
   document.querySelectorAll(selector).forEach(el => {
     el.classList.add('glow-card');
     el.addEventListener('mousemove', e => {
@@ -417,7 +382,7 @@ function initGlowButtons() {
 
 /* ── Magnetic pull for icons / social buttons ── */
 function initMagnetic() {
-  document.querySelectorAll('.sfb, .btn-icon, .icon-btn').forEach(el => {
+  document.querySelectorAll('.sfd, .btn-icon, .icon-btn').forEach(el => {
     el.classList.add('magnetic');
     el.addEventListener('mousemove', e => {
       const r = el.getBoundingClientRect();
@@ -522,6 +487,75 @@ function initCardTilt() {
   });
 }
 
+/* ── Discord copy-to-clipboard (no public profile URL) ── */
+function initDiscordCopy() {
+  const DISCORD_USER = 'omer_20720';
+
+  function copy(feedbackEl, revert) {
+    navigator.clipboard?.writeText(DISCORD_USER).catch(() => {});
+    if (feedbackEl) {
+      const original = feedbackEl.textContent;
+      feedbackEl.textContent = 'Copied!';
+      feedbackEl.classList.add('copied');
+      setTimeout(() => {
+        feedbackEl.textContent = original;
+        feedbackEl.classList.remove('copied');
+      }, 1400);
+    }
+  }
+
+  const discordRow = document.getElementById('discordRow');
+  discordRow?.addEventListener('click', () => copy(document.getElementById('discordLabel')));
+
+  const discordFlip = document.getElementById('discordFlip');
+  discordFlip?.addEventListener('click', () => copy(document.getElementById('discordTip')));
+}
+
+/* ── Project card polish: shine sweep, featured ribbon, icon tags ── */
+const TAG_ICONS = {
+  python:'fab fa-python', flutter:'fas fa-mobile-alt', fastapi:'fas fa-server',
+  finbert:'fas fa-comment-dots', vader:'fas fa-face-smile', gemini:'fas fa-robot',
+  firebase:'fas fa-fire-flame-curved', render:'fas fa-cloud',
+  at89c51:'fas fa-microchip', c:'fas fa-code', 'c++':'fas fa-code',
+  sensors:'fas fa-satellite-dish', lcd:'fas fa-tv', embedded:'fas fa-microchip',
+  arduino:'fas fa-microchip', i2c:'fas fa-network-wired', tinkercad:'fas fa-cube',
+  ldr:'fas fa-sun', 'hc-sr04':'fas fa-wave-square', iot:'fas fa-satellite', relay:'fas fa-toggle-on'
+};
+const CAT_ICONS = { ai:'fas fa-brain', mobile:'fas fa-mobile-alt', embedded:'fas fa-microchip' };
+
+function initProjectCards() {
+  document.querySelectorAll('.proj-card').forEach((card, i) => {
+    // shine sweep overlay
+    const imgsWrap = card.querySelector('.proj-imgs');
+    if (imgsWrap && !imgsWrap.querySelector('.proj-shine')) {
+      const shine = document.createElement('div');
+      shine.className = 'proj-shine';
+      imgsWrap.appendChild(shine);
+    }
+    // featured ribbon on flagship project
+    if (i === 0 && imgsWrap && !imgsWrap.querySelector('.proj-featured')) {
+      const ribbon = document.createElement('div');
+      ribbon.className = 'proj-featured';
+      ribbon.innerHTML = '<i class="fas fa-star"></i> Featured';
+      imgsWrap.appendChild(ribbon);
+    }
+    // icon-ify tags
+    card.querySelectorAll('.proj-tags span').forEach(span => {
+      if (span.querySelector('i')) return;
+      const key = span.textContent.trim().toLowerCase();
+      const icon = TAG_ICONS[key] || 'fas fa-tag';
+      span.innerHTML = `<i class="${icon}"></i>${span.textContent}`;
+    });
+    // icon-ify category badges
+    card.querySelectorAll('.cat-badge').forEach(badge => {
+      if (badge.querySelector('i')) return;
+      const key = badge.textContent.trim().toLowerCase();
+      const icon = CAT_ICONS[key] || 'fas fa-tag';
+      badge.innerHTML = `<i class="${icon}"></i>${badge.textContent}`;
+    });
+  });
+}
+
 /* ── init ───────────────────────────── */
 window.addEventListener('DOMContentLoaded', () => {
   initCardSliders();
@@ -529,7 +563,6 @@ window.addEventListener('DOMContentLoaded', () => {
   runMorphText();
   runBadgeFlip();
   runCounters();
-  initCursor();
   initGlowCards();
   initGlowButtons();
   initMagnetic();
@@ -538,6 +571,8 @@ window.addEventListener('DOMContentLoaded', () => {
   initFAQ();
   initTitleReveal();
   initCardTilt();
+  initDiscordCopy();
+  initProjectCards();
   onScroll(); // run once to set initial states
 });
 
