@@ -702,6 +702,125 @@ footer p{font-size:13px;color:var(--txt3);display:none}
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
 .reveal.in{opacity:1;transform:none}
 
+/* ══════════════════════════════════════════════
+   NEW — interactive layer
+══════════════════════════════════════════════ */
+
+/* ── Magnetic Cursor ── */
+.cursor-dot,.cursor-ring{position:fixed;top:0;left:0;pointer-events:none;z-index:10000;border-radius:50%;transform:translate(-50%,-50%);opacity:0;transition:opacity .25s ease}
+.cursor-dot{width:6px;height:6px;background:var(--acc)}
+.cursor-ring{width:32px;height:32px;border:1.5px solid var(--acc-md);transition:width .2s,height .2s,border-color .2s,opacity .25s ease}
+.cursor-ring.big{width:60px;height:60px;border-color:var(--acc)}
+.cursor-ring.click{width:24px;height:24px}
+body.has-cursor.cursor-live .cursor-dot,body.has-cursor.cursor-live .cursor-ring{opacity:1}
+body.has-cursor{cursor:none}
+body.has-cursor a,body.has-cursor button,body.has-cursor input,body.has-cursor textarea{cursor:none}
+@media(hover:none),(pointer:coarse){.cursor-dot,.cursor-ring{display:none!important}body.has-cursor{cursor:auto}}
+
+/* ── Glow Border Card (cursor-tracking) ── */
+.glow-card{position:relative}
+.glow-card::after{
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  background:radial-gradient(220px circle at var(--mx,50%) var(--my,50%), var(--acc-md), transparent 65%);
+  opacity:0;transition:opacity .35s ease;pointer-events:none;z-index:0;
+}
+.glow-card:hover::after{opacity:1}
+.glow-card > *{position:relative;z-index:1}
+
+/* ── Aurora Hero background ── */
+.aurora-wrap{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;filter:blur(70px);opacity:.5}
+.light .aurora-wrap{opacity:.28}
+.aurora-blob{position:absolute;border-radius:50%;mix-blend-mode:screen}
+.light .aurora-blob{mix-blend-mode:multiply}
+.ab1{width:460px;height:460px;background:var(--acc);top:-140px;left:-100px;animation:auroraMove1 17s ease-in-out infinite}
+.ab2{width:400px;height:400px;background:var(--sky);top:6%;right:-120px;animation:auroraMove2 21s ease-in-out infinite}
+.ab3{width:360px;height:360px;background:var(--green);bottom:-160px;left:32%;animation:auroraMove3 19s ease-in-out infinite}
+@keyframes auroraMove1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(70px,40px) scale(1.15)}}
+@keyframes auroraMove2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-60px,50px) scale(1.1)}}
+@keyframes auroraMove3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(50px,-30px) scale(1.2)}}
+
+/* ── Radial Glow Buttons ── */
+.btn-solid,.cv-btn{position:relative;overflow:hidden;z-index:1}
+.btn-solid::before,.cv-btn::before{
+  content:'';position:absolute;width:150px;height:150px;border-radius:50%;z-index:-1;
+  background:radial-gradient(circle, rgba(255,255,255,.4), transparent 70%);
+  top:var(--gy,50%);left:var(--gx,50%);transform:translate(-50%,-50%) scale(0);
+  transition:transform .55s cubic-bezier(.2,.8,.2,1);pointer-events:none;
+}
+.btn-solid:hover::before,.cv-btn:hover::before{transform:translate(-50%,-50%) scale(1)}
+
+/* ── Corner Button (outline buttons) ── */
+.btn-outline{position:relative}
+.btn-outline::before,.btn-outline::after{
+  content:'';position:absolute;width:9px;height:9px;
+  border:2px solid var(--acc);opacity:0;transition:opacity .25s ease, width .25s ease, height .25s ease;
+}
+.btn-outline::before{top:-3px;left:-3px;border-right:none;border-bottom:none}
+.btn-outline::after{bottom:-3px;right:-3px;border-left:none;border-top:none}
+.btn-outline:hover::before,.btn-outline:hover::after{opacity:1;width:13px;height:13px}
+
+/* ── Spotlight Navbar ── */
+.nav-center{position:relative;border-radius:99px}
+.nav-center::before{
+  content:'';position:absolute;inset:-4px 0;border-radius:99px;z-index:0;
+  background:radial-gradient(90px circle at var(--nx,50%) var(--ny,50%), var(--acc-lo), transparent 70%);
+  opacity:0;transition:opacity .3s ease;pointer-events:none;
+}
+.nav-center.spot-on::before{opacity:1}
+.nl{position:relative;z-index:1}
+
+/* ── Magnetic elements ── */
+.magnetic{transition:transform .25s cubic-bezier(.2,.8,.2,1)}
+
+/* ── Tech Marquee (Logo Slider) ── */
+.marquee-wrap{
+  overflow:hidden;position:relative;margin-top:34px;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+}
+.marquee-track{display:flex;gap:14px;width:max-content;animation:marqueeScroll 28s linear infinite}
+.marquee-wrap:hover .marquee-track{animation-play-state:paused}
+@keyframes marqueeScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.marquee-item{
+  display:flex;align-items:center;gap:9px;padding:10px 20px;
+  background:var(--card);border:1.5px solid var(--border);border-radius:var(--r);
+  font-size:13px;font-weight:500;color:var(--txt2);white-space:nowrap;flex-shrink:0;
+}
+.marquee-item i{color:var(--acc);font-size:16px}
+
+/* ── FAQ Accordion ── */
+.faq-wrap{max-width:760px;display:flex;flex-direction:column;gap:12px;position:relative;z-index:1}
+.faq-item{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r2);overflow:hidden;transition:var(--t)}
+.faq-item:hover{border-color:var(--border2)}
+.faq-item.open{border-color:var(--acc)}
+.faq-q{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:18px 22px;cursor:pointer;font-size:15px;font-weight:600;color:var(--txt);
+}
+.faq-q i{color:var(--acc);transition:transform .3s ease;flex-shrink:0;font-size:14px}
+.faq-item.open .faq-q i{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.faq-a p{padding:0 22px 20px;font-size:14px;color:var(--txt2);line-height:1.7}
+
+/* ── Rays background accent ── */
+.rays-bg{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;opacity:.15}
+.rays-bg::before{
+  content:'';position:absolute;top:50%;left:50%;width:220%;height:220%;
+  background:repeating-conic-gradient(from 0deg, var(--acc) 0deg 2deg, transparent 2deg 15deg);
+  transform:translate(-50%,-50%);animation:raysSpin 70s linear infinite;
+}
+@keyframes raysSpin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+
+/* ── Kinetic section-title reveal ── */
+.sec-title .stw{
+  display:inline-block;opacity:0;transform:translateY(60%);filter:blur(3px);
+  transition:transform .55s cubic-bezier(.2,.8,.2,1),opacity .55s ease,filter .55s ease;
+}
+.sec-title.in .stw{opacity:1;transform:translateY(0);filter:blur(0)}
+
+/* ── proj-card 3D tilt support ── */
+.proj-card{will-change:transform}
+
 /* ── responsive ── */
 @media(max-width:860px){
   .hero{flex-direction:column-reverse;text-align:center;padding-top:110px}
@@ -724,4 +843,7 @@ footer p{font-size:13px;color:var(--txt3);display:none}
   .tl-year{font-size:11px;padding-right:10px}
   .modal-info{padding:16px}
   .contact-form{padding:20px}
+}
+@media(hover:none),(pointer:coarse){
+  .glow-card::after{display:none}
 }
