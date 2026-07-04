@@ -260,7 +260,7 @@ document.getElementById('themeBtn').addEventListener('click', () => {
     light ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-circle-half-stroke"></i>';
 });
 
-/* ── hero typewriter ───────────────── */
+/* ── hero Morph Text (blur-morph word rotation) ─── */
 const ROLES = [
   "AI-powered apps",
   "Flutter mobile apps",
@@ -269,20 +269,50 @@ const ROLES = [
   "FastAPI backends",
   "IoT projects"
 ];
-let rIdx=0, cIdx=0, del=false;
-const roleEl = document.getElementById('roleText');
-function typeRole() {
-  const word = ROLES[rIdx];
-  if (!del) {
-    cIdx++;
-    roleEl.textContent = word.slice(0, cIdx);
-    if (cIdx === word.length) { del=true; setTimeout(typeRole,1600); return; }
-  } else {
-    cIdx--;
-    roleEl.textContent = word.slice(0, cIdx);
-    if (cIdx === 0) { del=false; rIdx=(rIdx+1)%ROLES.length; }
-  }
-  setTimeout(typeRole, del ? 50 : 85);
+let morphIdx = 0;
+function runMorphText() {
+  const el = document.getElementById('morphText');
+  if (!el) return;
+  el.textContent = ROLES[morphIdx];
+  el.classList.add('morph-in');
+  requestAnimationFrame(() => requestAnimationFrame(() => el.classList.remove('morph-in')));
+
+  setInterval(() => {
+    el.classList.add('morph-out');
+    setTimeout(() => {
+      morphIdx = (morphIdx + 1) % ROLES.length;
+      el.textContent = ROLES[morphIdx];
+      el.classList.remove('morph-out');
+      el.classList.add('morph-in');
+      requestAnimationFrame(() => requestAnimationFrame(() => el.classList.remove('morph-in')));
+    }, 380);
+  }, 2600);
+}
+
+/* ── hero badge Flip Fade Text ──────── */
+const BADGE_WORDS = ["Open to opportunities", "Actively building", "Always learning"];
+let badgeIdx = 0;
+function runBadgeFlip() {
+  const el = document.getElementById('badgeFlip');
+  if (!el) return;
+  setInterval(() => {
+    el.classList.add('ff-out');
+    setTimeout(() => {
+      badgeIdx = (badgeIdx + 1) % BADGE_WORDS.length;
+      el.textContent = BADGE_WORDS[badgeIdx];
+      el.classList.remove('ff-out');
+      el.classList.add('ff-in');
+      requestAnimationFrame(() => requestAnimationFrame(() => el.classList.remove('ff-in')));
+    }, 450);
+  }, 3200);
+}
+
+/* ── Kinetic Text Loader ────────────── */
+function hidePageLoader() {
+  const loader = document.getElementById('pageLoader');
+  if (!loader) return;
+  loader.classList.add('kl-hide');
+  setTimeout(() => loader.remove(), 600);
 }
 
 /* ── counter anim ──────────────────── */
@@ -326,7 +356,12 @@ function setupReveal() {
 window.addEventListener('DOMContentLoaded', () => {
   initCardSliders();
   setupReveal();
-  typeRole();
+  runMorphText();
+  runBadgeFlip();
   runCounters();
   onScroll(); // run once to set initial states
+});
+
+window.addEventListener('load', () => {
+  setTimeout(hidePageLoader, 400);
 });
